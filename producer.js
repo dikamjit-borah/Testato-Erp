@@ -1,7 +1,7 @@
 const amqp = require('amqplib/callback_api')
 const config = require('./config.json')
 
-function sendToRabbitMq(queueName, data){
+function sendToRabbitMq(queueName, pattern, data){
 
     rabbitMqQueue = config.rabbitMqConfig.queuePrefix + "_" + queueName
     if (!global.rabbitMqChannel) {
@@ -13,7 +13,13 @@ function sendToRabbitMq(queueName, data){
         persistent: true
     });
 
-    global.rabbitMqChannel.sendToQueue(rabbitMqQueue, new Buffer(JSON.stringify(data)), [{ persistent: true }]);
+    const rabbitMqPayload = new Buffer(
+        JSON.stringify({
+            pattern,
+            data
+        }))
+
+    global.rabbitMqChannel.sendToQueue(rabbitMqQueue, rabbitMqPayload, [{ persistent: true }]);
     
     return;
         

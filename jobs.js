@@ -1,14 +1,11 @@
-const req = require('express/lib/request');
 const cron = require('node-cron')
-const shell = require('shelljs')
 const csvtojson = require('csvtojson')
 const path = require('path')
 const fs = require('fs');
 const { sendToRabbitMq } = require('./producer');
-const config = require('./config.json')
-const csvFolder = path.join(__dirname, "csv")
-const amqp = require('amqplib/callback_api')
+const { Constants } = require('./constants');
 
+const csvFolder = path.join(__dirname, "csv")
 
 async function getMedicineData() {
     cron.schedule("0 */1 * * * *", async () => {
@@ -16,15 +13,12 @@ async function getMedicineData() {
        
         generateMedicineData().then((resultsArr)=>{ 
 
-            let rabbitMqPayload = {
-                pharmacyId:"7002936200",
+            let erpData = {
+                pharmacyId:Constants.PHARMACY_ID,
                 medicineData: resultsArr
             }    
-            sendToRabbitMq("MEDICINE-DATA", rabbitMqPayload)
-        })
-       //console.log(medicineData);
-        //sendToRabbitMq(medicineData)
-       
+            sendToRabbitMq(Constants.MEDICINE_DATA_QUEUE, Constants.UPDATE_MEDICINE_DATA_PATTERN,  erpData)
+        })       
     })
 
 }
