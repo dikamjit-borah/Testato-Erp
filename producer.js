@@ -19,6 +19,7 @@ function sendToRabbitMq(queueName, pattern, data){
             data
         }))
 
+    console.log("Sending payload to rabbitmq");
     global.rabbitMqChannel.sendToQueue(rabbitMqQueue, rabbitMqPayload, [{ persistent: true }]);
     
     return;

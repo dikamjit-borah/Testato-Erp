@@ -13,6 +13,7 @@ async function getMedicineData() {
        
         generateMedicineData().then((resultsArr)=>{ 
 
+            console.log("Medicine data generated");
             let erpData = {
                 pharmacyId:Constants.PHARMACY_ID,
                 medicineData: resultsArr
