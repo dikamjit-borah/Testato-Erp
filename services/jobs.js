@@ -1,7 +1,7 @@
 const cron = require('node-cron')
-const { sendToRabbitMq } = require('./producer');
-const { Constants } = require('./constants');
-const { generateMedicineData } = require('./medicineController');
+const { sendToRabbitMq } = require('../rmq/rmq.producer');
+const { Constants } = require('../utils/constants');
+const { generateMedicineData } = require('../controllers/medicineController');
 
 async function getMedicineData() {
     cron.schedule("0 */1 * * * *", async () => {

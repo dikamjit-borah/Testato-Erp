@@ -2,11 +2,11 @@ const csvtojson = require('csvtojson')
 const path = require('path')
 const fs = require('fs');
 
-const csvFolder = path.join(__dirname, "csv")
+const csvFolder = path.join(__dirname, "../csv")
 
 async function generateMedicineData() {
     return new Promise((resolve, reject) =>{
-        console.log("Obtaining updated csv's");
+        console.log("Obtaining updated csv's from " + csvFolder);
         let resultsArr = []
         let csvFiles = []
         fs.readdir(csvFolder, async (err, files) =>  {

@@ -4,8 +4,8 @@ const express = require('express')
 const cors = require('cors');
 const app = express()
 
-const jobs = require('./jobs');
-const { setupRabbitMq } = require('./rabbitmq.start');
+const jobs = require('./services/jobs');
+const { setupRabbitMq } = require('./rmq/rmq.start');
 
 const port = process.env.PORT || 3004;
 var corsOptions = {
