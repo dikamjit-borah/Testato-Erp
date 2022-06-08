@@ -1,9 +1,9 @@
 const amqp = require('amqplib/callback_api')
 const config = require('./config.json')
 
-function sendToRabbitMq(queueName, pattern, data){
+async function sendToRabbitMq(queueName, pattern, data){
 
-    rabbitMqQueue = config.rabbitMqConfig.queuePrefix + "_" + queueName
+    rabbitMqQueue = `${config.rabbitMqConfig.queuePrefix}_${queueName}`
     if (!global.rabbitMqChannel) {
         throw Error("RabbitMq channel not available")
     }
@@ -19,14 +19,13 @@ function sendToRabbitMq(queueName, pattern, data){
             data
         }))
 
-    console.log("Sending payload to rabbitmq");
-    global.rabbitMqChannel.sendToQueue(rabbitMqQueue, rabbitMqPayload, [{ persistent: true }]);
+    console.log("Sending payload to queue "+ rabbitMqQueue);
+    await global.rabbitMqChannel.sendToQueue(rabbitMqQueue, rabbitMqPayload, [{ persistent: true }]);
+    console.log("Payload sent");
     
     return;
         
 }
-
-
 module.exports = {sendToRabbitMq}
 
 

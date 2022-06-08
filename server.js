@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors');
 const app = express()
@@ -5,10 +7,9 @@ const app = express()
 const jobs = require('./jobs');
 const { setupRabbitMq } = require('./rabbitmq.start');
 
-const port =  3004;
-
+const port = process.env.PORT || 3004;
 var corsOptions = {
-  origin: `http://localhost:${port}`,
+  origin: `${process.env.HOST}:${port}`,
 };
 
 app.use(cors())

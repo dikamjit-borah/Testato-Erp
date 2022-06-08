@@ -1,8 +1,5 @@
 {
     "rabbitMqConfig":{
-        "ip": "localhost",
-        "username": "admin",
-        "password": "admin",
         "queuePrefix": "TESTATO-ERP"
     }
 }
